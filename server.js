@@ -4,6 +4,7 @@ var express = require('express')
 , port = process.env.PORT || 2002
 , fs = require('fs')
 , util = require('util');
+var exec = require('child_process').exec;
 
 // Creates the website server on the port #
 server.listen(port, function () {
@@ -18,12 +19,17 @@ app.set('view engine', 'html');
 app.use(express.static(__dirname + '/public'));
 app.engine('html', require('ejs').renderFile);
 
-// Helper function to format the strings so that they don't include spaces and are all lowercase 
+// Helper function to format the strings so that they don't include spaces and are all lowercase
 var FormatString = function(string)
 {
   var lowercaseString = string.toLowerCase();
   var formattedString = lowercaseString.replace(/\s/g,'');
   return formattedString;
+};
+
+var snedCommand = function(command) {
+  exec("irsend SEND_ONCE ollehtv " + command);
+  console.log(command);
 };
 
 // Handles the route for echo apis
@@ -44,8 +50,7 @@ app.post('/api/echo', function(req, res){
 
     // parsing the requestBody for information
     var jsonData = JSON.parse(requestBody);
-    if(jsonData.request.type == "LaunchRequest")
-    {
+    if (jsonData.request.type == "LaunchRequest") {
       // crafting a response
       responseBody = {
         "version": "0.1",
@@ -68,26 +73,61 @@ app.post('/api/echo', function(req, res){
           "shouldEndSession": false
         }
       };
-    }
-    else if(jsonData.request.type == "IntentRequest")
-    {
-      var outputSpeechText = "";
-      var cardContent = "";
-      if (jsonData.request.intent.name == "TurnOn")
-      {
-        // The Intent "TurnOn" was successfully called
-        outputSpeechText = "Congrats! You asked to turn on " // + jsonData.request.intent.slots.Device.value + " but it was not implemented";
-        cardContent = "Successfully called " + jsonData.request.intent.name + ", but it's not implemented!";
+    } else if (jsonData.request.type == "IntentRequest") {
+      var command = [];
+      var outputSpeechText = "ok";
+      var cardContent = jsonData.request.intent.name;
+      if (jsonData.request.intent.name == "TurnOn") {
+        command.push("KEY_SETTOPPOWER");
+      } else if (jsonData.request.intent.name == "TurnOff") {
+        command.push("KEY_SETTOPPOWER");
+      } else if (jsonData.request.intent.name == "SBS") {
+        command.push("KEY_5");
+        command.push("KEY_OK");
+      } else if (jsonData.request.intent.name == "KBS_ONE") {
+        command.push("KEY_9");
+        command.push("KEY_OK");
+      } else if (jsonData.request.intent.name == "KBS_TWO") {
+        command.push("KEY_7");
+        command.push("KEY_OK");
+      } else if (jsonData.request.intent.name == "MBC") {
+        command.push("KEY_9");
+        command.push("KEY_OK");
+      } else if (jsonData.request.intent.name == "JTBC") {
+        command.push("KEY_1");
+        command.push("KEY_5");
+        command.push("KEY_OK");
+      } else if (jsonData.request.intent.name == "TVN") {
+        command.push("KEY_1");
+        command.push("KEY_9");
+        command.push("KEY_OK");
+      } else if (jsonData.request.intent.name == "Switch") {
+        command.push("KEY_SOURCE");
+      } else if (jsonData.request.intent.name == "ChannelDown") {
+        command.push("KEY_CHANNELDOWN");
+      } else if (jsonData.request.intent.name == "ChannelUp") {
+        command.push("KEY_CHANNELUP");
+      } else if (jsonData.request.intent.name == "VolumeDown") {
+        command.push("KEY_VOLUMEDOWN");
+      } else if (jsonData.request.intent.name == "VolumeUp") {
+        command.push("KEY_VOLUMEUP");
+      } else if (jsonData.request.intent.name == "Mute") {
+        command.push("KEY_MUTE");
+      } else if (jsonData.request.intent.name == "OK") {
+        command.push("KEY_OK");
+      } else if (jsonData.request.intent.name == "Exit") {
+        command.push("KEY_EXIT");
+      } else {
+        outputSpeechText = "I don't know what you say!";
+        cardContent = "I don't know what you say! You said " + jsonData.request.intent.name;
       }
-      else if (jsonData.request.intent.name == "TurnOff")
-      {
-        // The Intent "TurnOff" was successfully called
-        outputSpeechText = "Congrats! You asked to turn off " // + jsonData.request.intent.slots.Device.value + " but it was not implemented";
-        cardContent = "Successfully called " + jsonData.request.intent.name + ", but it's not implemented!";
-      }else{
-        outputSpeechText = jsonData.request.intent.name + " not implemented";
-        cardContent = "Successfully called " + jsonData.request.intent.name + ", but it's not implemented!";
-      }
+
+      command.forEach(function(c) {
+        setTimeOut(function() {
+          sendCommand(d);
+        }, 200);
+      }) ;
+
       responseBody = {
           "version": "0.1",
           "response": {
@@ -103,7 +143,7 @@ app.post('/api/echo', function(req, res){
             "shouldEndSession": false
           }
         };
-    }else{
+    } else {
       // Not a recognized type
       responseBody = {
         "version": "0.1",
