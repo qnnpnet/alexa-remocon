@@ -32,6 +32,16 @@ var snedCommand = function(command) {
   console.log(command);
 };
 
+app.get('/', function(req, res) {
+  var command = [];
+  command.push("KEY_SETTOPPOWER");
+  command.forEach(function(c) {
+    setTimeOut(function() {
+      sendCommand(d);
+    }, 200);
+  }) ;
+});
+
 // Handles the route for echo apis
 app.post('/api/echo', function(req, res){
   console.log("received echo request");
