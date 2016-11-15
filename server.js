@@ -36,7 +36,7 @@ app.get('/', function(req, res) {
   var command = [];
   command.push("KEY_SETTOPPOWER");
   command.forEach(function(c) {
-    setTimeOut(function() {
+    setTimeout(function() {
       sendCommand(d);
     }, 200);
   }) ;
