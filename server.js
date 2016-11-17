@@ -135,11 +135,11 @@ app.post('/api/echo', function(req, res){
         cardContent = "I don't know what you say! You said " + jsonData.request.intent.name;
       }
 
-      command.forEach(function(c) {
-        await (setTimeout(function() {
+      await (command.forEach(function(c) {
+        setTimeout(function() {
           sendCommand(c);
-        }, 200));
-      }) ;
+        }, 200);
+      }));
 
       responseBody = {
           "version": "0.1",
