@@ -30,20 +30,17 @@ var FormatString = function(string)
   return formattedString;
 };
 
+function sleep(ms) {
+  ms = ms || 0;
+  return new Promise(function(resolve) {
+    setTimeout(resolve, ms);
+  });
+}
+
 var sendCommand = function(command) {
   console.log("command:", command);
   http.get("http://qnnp.net:2002/api/remocon?command=" + command);
 };
-
-app.get('/', function(req, res) {
-  var command = [];
-  command.push("KEY_SETTOPPOWER");
-  command.forEach(function(c) {
-    setTimeout(function() {
-      sendCommand(d);
-    }, 200);
-  }) ;
-});
 
 // Handles the route for echo apis
 app.post('/api/echo', function(req, res){
@@ -135,11 +132,11 @@ app.post('/api/echo', function(req, res){
         cardContent = "I don't know what you say! You said " + jsonData.request.intent.name;
       }
 
-      command.forEach(async(function(c) {
-        await(setTimeout(function() {
+      command.forEach(function(c) {
+        sleep(400).then(function(c){
           sendCommand(c);
-        }, 200));
-      }));
+        });
+      });
 
       responseBody = {
           "version": "0.1",
