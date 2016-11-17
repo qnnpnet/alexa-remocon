@@ -133,14 +133,14 @@ app.post('/api/echo', function(req, res){
 
       for(var i = 0; i < command.length; i++) {
         var c = command[i];
-        sleep(400).then(function() {
-          sendCommand(c);
-        });
-
-        // async(function() {
-        //   await sleep(400);
+        // sleep(400).then(function() {
         //   sendCommand(c);
         // });
+
+        async(function() {
+          await sleep(400);
+          sendCommand(c);
+        });
       }
 
       responseBody = {
