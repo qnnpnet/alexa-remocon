@@ -6,8 +6,6 @@ var express = require('express')
 , util = require('util');
 var http = require('http');
 var exec = require('child_process').exec;
-var async = require('asyncawait/async');
-var await = require('asyncawait/await');
 
 // Creates the website server on the port #
 server.listen(port, function () {
@@ -30,12 +28,6 @@ var FormatString = function(string)
   return formattedString;
 };
 
-function sleep(ms) {
-  return new Promise(function(r) {
-    setTimeout(r, ms);
-  });
-}
-
 var sendCommand = function(command) {
   console.log("command:", command);
   http.get("http://qnnp.net:2002/api/remocon?command=" + command);
@@ -55,7 +47,7 @@ app.post('/api/echo', function(req, res){
   req.on('end', function(){
     var responseBody = {};
     console.log(requestBody);
-    // console.log(JSON.stringify(requestBody));
+    console.log(JSON.stringify(requestBody));
 
     // parsing the requestBody for information
     var jsonData = JSON.parse(requestBody);
@@ -131,17 +123,11 @@ app.post('/api/echo', function(req, res){
         cardContent = "I don't know what you say! You said " + jsonData.request.intent.name;
       }
 
-      for(var i = 0; i < command.length; i++) {
-        var c = command[i];
-        sleep(400).then(function() {
+      command.forEach(function(c) {
+        setTimeout(function() {
           sendCommand(c);
-        });
-
-        // async(function() {
-        //   await sleep(400);
-        //   sendCommand(c);
-        // });
-      }
+        }, 400);
+      }) ;
 
       responseBody = {
           "version": "0.1",
@@ -185,7 +171,6 @@ app.post('/api/echo', function(req, res){
 
     res.statusCode = 200;
     res.contentType('application/json');
-    console.log("responseBody", responseBody);
     res.send(responseBody);
   });
 });
