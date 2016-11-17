@@ -4,6 +4,7 @@ var express = require('express')
 , port = process.env.PORT || 2002
 , fs = require('fs')
 , util = require('util');
+var http = require('http');
 var exec = require('child_process').exec;
 
 // Creates the website server on the port #
@@ -28,8 +29,8 @@ var FormatString = function(string)
 };
 
 var snedCommand = function(command) {
-  exec("irsend SEND_ONCE ollehtv " + command);
   console.log(command);
+  http.get("http://qnnp.net/api/echo?command=" + command);
 };
 
 app.get('/', function(req, res) {
