@@ -133,9 +133,9 @@ app.post('/api/echo', function(req, res){
       }
 
       command.forEach(function(c) {
-        sleep(400).then(function(){
+        // sleep(400).then(function(){
           sendCommand(c);
-        });
+        // });
       });
 
       responseBody = {
