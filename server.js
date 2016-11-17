@@ -132,7 +132,8 @@ app.post('/api/echo', function(req, res){
         cardContent = "I don't know what you say! You said " + jsonData.request.intent.name;
       }
 
-      command.forEach(function(c) {
+      forEach(var i = 0; i < command.size(); i++) {
+        var c = command[i];
         // sleep(400).then(function(){
           sendCommand(c);
         // });
