@@ -132,12 +132,12 @@ app.post('/api/echo', function(req, res){
         cardContent = "I don't know what you say! You said " + jsonData.request.intent.name;
       }
 
-      forEach(var i = 0; i < command.size(); i++) {
+      for(var i = 0; i < command.size(); i++) {
         var c = command[i];
-        // sleep(400).then(function(){
+        sleep(400).then(function(){
           sendCommand(c);
-        // });
-      });
+        });
+      };
 
       responseBody = {
           "version": "0.1",
