@@ -6,6 +6,8 @@ var express = require('express')
 , util = require('util');
 var http = require('http');
 var exec = require('child_process').exec;
+var async = require('asyncawait/async');
+var await = require('asyncawait/await');
 
 // Creates the website server on the port #
 server.listen(port, function () {
@@ -54,7 +56,7 @@ app.post('/api/echo', function(req, res){
   });
 
   // Called when all data has been accumulated
-  req.on('end', function(){
+  req.on('end', async(function(){
     var responseBody = {};
     console.log(requestBody);
     console.log(JSON.stringify(requestBody));
@@ -134,9 +136,9 @@ app.post('/api/echo', function(req, res){
       }
 
       command.forEach(function(c) {
-        setTimeout(function() {
+        await (setTimeout(function() {
           sendCommand(c);
-        }, 200);
+        }, 200));
       }) ;
 
       responseBody = {
@@ -182,5 +184,5 @@ app.post('/api/echo', function(req, res){
     res.statusCode = 200;
     res.contentType('application/json');
     res.send(responseBody);
-  });
+  }));
 });
