@@ -29,8 +29,8 @@ var FormatString = function(string)
 };
 
 var sendCommand = function(command) {
-  console.log(command);
-  http.get("http://qnnp.net/api/echo?command=" + command);
+  console.log("command:", command);
+  http.get("http://qnnp.net:2002/api/echo?command=" + command);
 };
 
 app.get('/', function(req, res) {
