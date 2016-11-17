@@ -135,7 +135,7 @@ app.post('/api/echo', function(req, res){
 
       command.forEach(function(c) {
         setTimeout(function() {
-          sendCommand(d);
+          sendCommand(c);
         }, 200);
       }) ;
 
