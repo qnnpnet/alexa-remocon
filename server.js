@@ -155,7 +155,7 @@ app.post('/api/echo', function(req, res){
               "title": "Open Smart Hub",
               "content": cardContent
             },
-            "shouldEndSession": false
+            "shouldEndSession": true
           }
         };
     } else {
