@@ -52,10 +52,10 @@ app.post('/api/echo', function(req, res){
   });
 
   // Called when all data has been accumulated
-  req.on('end', async(function(){
+  req.on('end', function(){
     var responseBody = {};
     console.log(requestBody);
-    console.log(JSON.stringify(requestBody));
+    // console.log(JSON.stringify(requestBody));
 
     // parsing the requestBody for information
     var jsonData = JSON.parse(requestBody);
@@ -133,14 +133,14 @@ app.post('/api/echo', function(req, res){
 
       for(var i = 0; i < command.length; i++) {
         var c = command[i];
-        // sleep(400).then(function() {
-        //   sendCommand(c);
-        // });
-
-        async(function() {
-          await sleep(400);
+        sleep(400).then(function() {
           sendCommand(c);
         });
+
+        // async(function() {
+        //   await sleep(400);
+        //   sendCommand(c);
+        // });
       }
 
       responseBody = {
@@ -186,5 +186,5 @@ app.post('/api/echo', function(req, res){
     res.statusCode = 200;
     res.contentType('application/json');
     res.send(responseBody);
-  }));
+  });
 });
