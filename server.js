@@ -31,9 +31,8 @@ var FormatString = function(string)
 };
 
 function sleep(ms) {
-  ms = ms || 0;
-  return new Promise(function(resolve) {
-    setTimeout(resolve, ms);
+  return new Promise(function(r) {
+    setTimeout(r, ms);
   });
 }
 
@@ -132,13 +131,17 @@ app.post('/api/echo', function(req, res){
         cardContent = "I don't know what you say! You said " + jsonData.request.intent.name;
       }
 
-      var len = Array.isArray(command) ? command.size() : 1;
-      for(var i = 0; i < len; i++) {
+      for(var i = 0; i < command.length; i++) {
         var c = command[i];
-        sleep(400).then(function(){
+        sleep(400).then(function() {
           sendCommand(c);
         });
-      };
+
+        // async(function() {
+        //   await sleep(400);
+        //   sendCommand(c);
+        // });
+      }
 
       responseBody = {
           "version": "0.1",
