@@ -185,7 +185,7 @@ app.post('/api/echo', function(req, res){
 
     res.statusCode = 200;
     res.contentType('application/json');
-    consle.log("responseBody", responseBody);
+    console.log("responseBody", responseBody);
     res.send(responseBody);
   });
 });
