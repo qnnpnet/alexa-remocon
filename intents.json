@@ -1,0 +1,20 @@
+{
+  "intents": [
+    { "intent": "TurnOn" },
+    { "intent": "TurnOff" },
+    { "intent": "SBS" },
+    { "intent": "KBS_ONE" },
+    { "intent": "KBS_TWO" },
+    { "intent": "MBC" },
+    { "intent": "JTBC" },
+    { "intent": "TVN" },
+    { "intent": "Switch" },
+    { "intent": "ChannelUp" },
+    { "intent": "ChannelDown" },
+    { "intent": "VolumeUp" },
+    { "intent": "VolumeDown" },
+    { "intent": "Mute" },
+    { "intent": "OK" },
+    { "intent": "Exit" }
+  ]
+}

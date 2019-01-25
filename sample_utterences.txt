@@ -1,0 +1,35 @@
+TurnOn	turn on
+TurnOn	turn light on
+TurnOn	turn on light
+
+TurnOff	turn off
+TurnOff	turn light off
+TurnOff	turn off light
+
+SBS   sbs
+
+KBS_ONE  kbs one
+
+KBS_TWO  kbs two
+
+MBC   mbc
+
+JTBC  jtbc
+
+TVN   tvn
+
+Switch  switch
+
+ChannelUp   channel up
+
+ChannelDown channel down
+
+VolumeUp    volume up
+
+VolumeDown  volume down
+
+Mute        mute
+
+OK          ok
+
+Exit        exit
